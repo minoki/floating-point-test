@@ -73,10 +73,10 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Usage: %s [options]\n"
                     "Supported options:"
                     "  --help         Print this message.\n"
-                    "  --default-nan  Enable Default NaN mode on AArch64", argv[0]);
+                    "  --default-nan  Enable Default NaN mode on AArch64\n", argv[0]);
             return 1;
         } else {
-            fprintf(stderr, "Unrecognized option: %s", argv[1]);
+            fprintf(stderr, "Unrecognized option: %s\n", argv[1]);
         }
     }
     uint64_t nan_pattern = double_to_u64(NAN);
