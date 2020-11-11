@@ -39,7 +39,7 @@ int main(void)
     printf("FLT_MIN = %a\n", FLT_MIN);
     printf("FLT_TRUE_MIN = %a\n", FLT_TRUE_MIN);
     printf("float_t is %s\n", FLOATING_TYPE_NAME(float_t));
-    if (FLT_MANT_DIG == 24 && FLT_MIN_EXP == -126 && FLT_MAX_EXP == 128) {
+    if (FLT_MANT_DIG == 24 && FLT_MIN_EXP == -125 && FLT_MAX_EXP == 128) {
         puts("float is probably IEEE binary32 format");
     }
     puts("---");
