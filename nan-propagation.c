@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
             volatile double z = add(x, y);
             volatile double w = add(y, x);
             printf("%" PRIx64 " + %" PRIx64 " = %" PRIx64 "\n", double_to_u64(x), double_to_u64(y), double_to_u64(z));
-            printf("%" PRIx64 " + %" PRIx64 " = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), z == w ? "(commutative)" : "(not commutative)");
+            printf("%" PRIx64 " + %" PRIx64 " = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), double_to_u64(z) == double_to_u64(w) ? "(commutative)" : "(not commutative)");
             left = left && double_to_u64(z) == double_to_u64(x) && double_to_u64(w) == double_to_u64(y);
             right = right && double_to_u64(z) == double_to_u64(y) && double_to_u64(w) == double_to_u64(x);
             canonical = canonical && double_to_u64(z) == nan_pattern && double_to_u64(w) == nan_pattern;
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
             volatile double z = mul(x, y);
             volatile double w = mul(y, x);
             printf("%" PRIx64 " * %" PRIx64 " = %" PRIx64 "\n", double_to_u64(x), double_to_u64(y), double_to_u64(z));
-            printf("%" PRIx64 " * %" PRIx64 " = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), z == w ? "(commutative)" : "(not commutative)");
+            printf("%" PRIx64 " * %" PRIx64 " = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), double_to_u64(z) == double_to_u64(w) ? "(commutative)" : "(not commutative)");
             left = left && double_to_u64(z) == double_to_u64(x) && double_to_u64(w) == double_to_u64(y);
             right = right && double_to_u64(z) == double_to_u64(y) && double_to_u64(w) == double_to_u64(x);
             canonical = canonical && double_to_u64(z) == nan_pattern && double_to_u64(w) == nan_pattern;
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
         volatile double z = fma_noinline(x, y, 1.0);
         volatile double w = fma_noinline(y, x, 1.0);
         printf("fma(%" PRIx64 ", %" PRIx64 ", 1.0) = %" PRIx64 "\n", double_to_u64(x), double_to_u64(y), double_to_u64(z));
-        printf("fma(%" PRIx64 ", %" PRIx64 ", 1.0) = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), z == w ? "(commutative)" : "(not commutative)");
+        printf("fma(%" PRIx64 ", %" PRIx64 ", 1.0) = %" PRIx64 " %s\n", double_to_u64(y), double_to_u64(x), double_to_u64(w), double_to_u64(z) == double_to_u64(w) ? "(commutative)" : "(not commutative)");
     }
     {
         volatile double u = fma_noinline(a, b, c);
