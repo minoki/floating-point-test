@@ -3,6 +3,7 @@
 #include <float.h>
 
 #if defined(__cplusplus)
+#include <typeinfo>
 #define FLOATING_TYPE_NAME(T) (typeid(T) == typeid(float) ? "float" : typeid(T) == typeid(double) ? "double" : typeid(T) == typeid(long double) ? "long double" : "unknown")
 #else
 #define FLOATING_TYPE_NAME(T) _Generic((T *)NULL, float *: "float", double *: "double", long double *: "long double", default: "unknown")
