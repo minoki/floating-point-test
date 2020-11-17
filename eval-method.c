@@ -9,6 +9,17 @@
 #define FLOATING_TYPE_NAME(T) _Generic((T *)NULL, float *: "float", double *: "double", long double *: "long double", default: "unknown")
 #endif
 
+double three_mul_1(double x, double y, double z)
+{
+    return x * y * z;
+}
+
+double three_mul_2(double x, double y, double z)
+{
+    double xy = x * y;
+    return xy * z;
+}
+
 int main(void)
 {
     printf("FLT_RADIX = %d\n", FLT_RADIX);
@@ -79,5 +90,10 @@ int main(void)
         volatile double x = 0x1.fffe0effffffep-51, y = 0x1.0000000000001p-1000;
         volatile double z = x * y;
         printf("%a * %a = %a; %s\n", x, y, z, z == 0x1.fffe0ep-1051 ? "correctly rounded" : z == 0x1.fffe1p-1051 ? "incorrect rounding with x87 FPU" : "unexpected result");
+    }
+    {
+        volatile double x = 0x1p1000, y = 0x1p1000, z = 0x1p-1000;
+        printf("three_mul_1(%a, %a, %a) = %a\n", x, y, z, three_mul_1(x, y, z));
+        printf("three_mul_2(%a, %a, %a) = %a\n", x, y, z, three_mul_2(x, y, z));
     }
 }
