@@ -20,6 +20,11 @@ double three_mul_2(double x, double y, double z)
     return xy * z;
 }
 
+double three_mul_3(double x, double y, double z)
+{
+    return (double)(x * y) * z;
+}
+
 int main(void)
 {
     printf("FLT_RADIX = %d\n", FLT_RADIX);
@@ -94,6 +99,7 @@ int main(void)
     {
         volatile double x = 0x1p1000, y = 0x1p1000, z = 0x1p-1000;
         printf("three_mul_1(%a, %a, %a) = %a\n", x, y, z, three_mul_1(x, y, z));
-        printf("three_mul_2(%a, %a, %a) = %a\n", x, y, z, three_mul_2(x, y, z));
+        printf("three_mul_2(%a, %a, %a) = %a (variable)\n", x, y, z, three_mul_2(x, y, z));
+        printf("three_mul_3(%a, %a, %a) = %a (cast)\n", x, y, z, three_mul_3(x, y, z));
     }
 }
