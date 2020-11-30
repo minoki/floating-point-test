@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
            : r == FE_DOWNWARD ? "FE_DOWNWARD"
            : r == FE_TOWARDZERO ? "FE_TOWARDZERO"
            : "unknown");
-    const double values[] = {-1.5, -0.5, -0.25, -0.0, 0.25, 0.5, 1.5, 0x1p100, INFINITY, NAN};
+    const double values[] = {-INFINITY, -0x1p100, -1.5, -0.5, -0.25, -0.0, 0.25, 0.5, 1.5, 0x1p100, INFINITY, NAN};
     for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
         double x = values[i];
         feclearexcept(FE_ALL_EXCEPT);
