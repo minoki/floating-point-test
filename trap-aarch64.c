@@ -25,11 +25,19 @@ int main(void)
     uint64_t fpcr = get_fpcr();
     set_fpcr(fpcr | 0x9f00u); // IDE + IXE + UFE + OFE + DZE + IOE
     fpcr = get_fpcr();
-    if (fpcr & 0x9f00u) {
-        puts("Traps are supported.");
+    if ((fpcr & 0x9f00u) == 0x9f00u) {
+        puts("Traps are supported:");
+    } else if ((fpcr & 0x9f00u) != 0) {
+        puts("Traps are partially supported:");
     } else {
-        puts("Traps are not supported.");
+        puts("Traps are not supported:");
     }
+    printf("  Input Denormal floating-point exception (IDE) trap %s.\n", (fpcr & (1 << 15)) ? "enabled" : "disabled");
+    printf("  Inexact floating-point exception (IXE) trap %s.\n", (fpcr & (1 << 12)) ? "enabled" : "disabled");
+    printf("  Underflow floating-point exception (UFE) trap %s.\n", (fpcr & (1 << 11)) ? "enabled" : "disabled");
+    printf("  Overflow floating-point exception (OFE) trap %s.\n", (fpcr & (1 << 10)) ? "enabled" : "disabled");
+    printf("  Divide by Zero floating-point exception (DZE) trap %s.\n", (fpcr & (1 << 9)) ? "enabled" : "disabled");
+    printf("  Invalid Operation floating-point exception (IOE) trap %s.\n", (fpcr & (1 << 8)) ? "enabled" : "disabled");
     volatile double zero = 0.0, one = 1.0;
     printf("1.0 / 0.0 = %g\n", one / zero);
 }
