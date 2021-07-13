@@ -18,5 +18,5 @@ int main()
 {
     struct t t = add(1.0, 0x1p-100);
     printf("x + y = %a (upward)\n", t.x);
-    printf("x + y = %a (downward)\n", t.x);
+    printf("x + y = %a (downward)\n", t.y);
 }
