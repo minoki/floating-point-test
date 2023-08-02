@@ -4,8 +4,19 @@
 
 #pragma STDC FENV_ACCESS ON
 
-// #if defined(__clang__)
-// __builtin_aarch64_get_fpcr and __builtin_aarch64_set_fpcr are not available on clang
+#if defined(__GNUC__) && !defined(__clang__)
+// __has_builtin: GCC 10 or later
+// __builtin_aarch64_{get,set}_fpcr64: GCC 11 or later
+// __builtin_aarch64_{get,set}_fpcr: GCC 5 or later
+#define get_fpcr()  __builtin_aarch64_get_fpcr64()
+#define set_fpcr(x) __builtin_aarch64_set_fpcr64(x)
+#else
+#include <arm_acle.h>
+#define get_fpcr() __arm_rsr64("fpcr")
+#define set_fpcr(x) __arm_wsr64("fpcr", x)
+#endif
+
+#if 0
 __attribute__((always_inline))
 uint64_t get_fpcr()
 {
@@ -18,7 +29,7 @@ void set_fpcr(uint64_t x)
 {
     asm volatile("msr fpcr, %0" : : "r"(x));
 }
-// #endif
+#endif
 
 int main(void)
 {

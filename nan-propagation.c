@@ -14,6 +14,20 @@
 #define NOINLINE
 #endif
 
+#if defined(__aarch64__)
+#if defined(__GNUC__) && !defined(__clang__)
+// __has_builtin: GCC 10 or later
+// __builtin_aarch64_{get,set}_fpcr64: GCC 11 or later
+// __builtin_aarch64_{get,set}_fpcr: GCC 5 or later
+#define get_fpcr()  __builtin_aarch64_get_fpcr64()
+#define set_fpcr(x) __builtin_aarch64_set_fpcr64(x)
+#else
+#include <arm_acle.h>
+#define get_fpcr() __arm_rsr64("fpcr")
+#define set_fpcr(x) __arm_wsr64("fpcr", x)
+#endif
+#endif
+
 static_assert(sizeof(double) == 8 && FLT_RADIX == 2 && DBL_MANT_DIG == 53 && DBL_MIN_EXP == -1021 && DBL_MAX_EXP == 1024, "double must be IEEE binary64 format");
 
 double u64_to_double(uint64_t u64)
@@ -57,10 +71,10 @@ int main(int argc, char *argv[])
 {
     if (argc > 1) {
         if (strcmp(argv[1], "--default-nan") == 0) {
-#if defined(__aarch64__) && defined(__GNUC__)
-            unsigned int fpcr = __builtin_aarch64_get_fpcr();
-            __builtin_aarch64_set_fpcr(fpcr | (1u << 25));
-            fpcr = __builtin_aarch64_get_fpcr();
+#if defined(__aarch64__)
+            unsigned int fpcr = get_fpcr();
+            set_fpcr(fpcr | (1u << 25));
+            fpcr = get_fpcr();
             if (fpcr & (1u << 25)) {
                 puts("Default NaN mode set");
             } else {
